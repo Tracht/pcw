@@ -44,6 +44,7 @@ function App() {
 
       <div class="search-container">
         {/* <Search onClick={} /> */}
+        
         <form onSubmit={postcodeSubmit}>
           <label htmlFor="postcode">Postcode</label> <br></br>
           <input type="text" placeholder="postcode" 
