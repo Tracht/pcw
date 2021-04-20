@@ -1,29 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
 function App() {
 
   const [postcode, setPostcode] = useState('');
-  const [postcodeSuccess, setPostcodeSuccess] = ('');
-  const [postcodeError, setPostcodeError] = ('');
-  const [postcodeResult, setPostcodeResult] = ('');
-
-  const initialFormState = {
-    postcode: ''
-  }
-
-  // Get Postcode Lat & Long
-  useEffect(() => {
-    axios
-      .get(`api.postcodes.io/postcodes/${postcode}`)
-      .then(response => {
-        console.log(response);
-        setPostcodeResult(response);
-      })
-      .catch(error => {
-        console.log(error);
-      })
-  }, [postcode]);
+  const [latitude, setLatitude] = useState('');
+  const [longitude, setLongitude] = useState('');
+  const [message, setMessage] = useState('');
 
   const postcodeChange = (e) => {
     const {value} = e.target;
@@ -32,17 +15,31 @@ function App() {
 
   const postcodeSubmit = (e) => {
     e.preventDefault();
-    setPostcode(initialFormState); // resets the form
+    axios
+      .get(`http://api.postcodes.io/postcodes/${postcode}`)
+      .then(res => {
+        setLatitude(res.data.result.latitude);
+        setLongitude(res.data.result.longitude);
+        setPostcode(''); // resets the form
+      })
+      .catch(err => {
+        console.log(err);
+        console.log(err.response.data.error);
+        setMessage(err.response.data.error);
+        setLatitude('');
+        setLongitude('');
+      })
   }
 
   return (
-  <div class="App">
+  <div className="App">
     
-      <div class="header-container">
-        <h1>Postcode Wikipedia</h1>
+      <div className="header-container">
+        <h1>UK Postcode Wikipedia</h1>
+        {latitude && longitude ? <h3>Your location: ({latitude}, {longitude}) </h3> : null }
       </div>
 
-      <div class="search-container">
+      <div className="search-container">
         {/* <Search onClick={} /> */}
         
         <form onSubmit={postcodeSubmit}>
@@ -52,13 +49,14 @@ function App() {
             value={postcode} onChange={postcodeChange}/>
           <button type="submit" value="Submit">Submit</button>
         </form>
+        <p>{message}</p>
       </div>
 
-      <div class="body">
+      <div className="body">
         {/* <Cards props={}/> */}
       </div>
 
-      <div class="footer">
+      <div className="footer">
         {/* <Pagination props={} /> */}
       </div>
     
