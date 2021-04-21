@@ -54,18 +54,15 @@ function App() {
       // Step 4: Make the request to the Wiki URL
       const wikiResponse = await axios.get(url, {mode: 'cors'});
       const result = wikiResponse.data.query.pages;
-      const arrayResult = Object.entries(result).map(element => {
+      const arrayResult = Object.entries(result).map(element => { // turn 'result' into an array
         return element[1];
       })
-
-      // sortAtoZ(arrayResult, "title");
-      setWikiResult(arrayResult);
+      const sortedResultsAtoZ = sortAtoZ(arrayResult, "title"); // sort it A to Z
+      setWikiResult(sortedResultsAtoZ);
       console.log("wiki result:", arrayResult);
     }
     catch (err) {
       const message = err.response.data && err.response.data.error;
-      console.log("err", err);
-      console.log("err.response.data.error", message);
       setError(message);
       setLatitude('');
       setLongitude('');
@@ -108,7 +105,7 @@ function App() {
           { 
             wikiResult && <ul>
               {
-              wikiResult && sortAtoZ(wikiResult, "title").map(result => {
+              wikiResult && wikiResult.map(result => {
                 return (
                 <div>
                   <li>
