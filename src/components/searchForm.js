@@ -1,3 +1,5 @@
+import './searchForm.css'; 
+
 const SearchForm = props => {
     const { onSubmit, label, inputValue, inputText, onInputChange, error, submitText } = props;
     
