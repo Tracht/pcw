@@ -2,7 +2,6 @@ import './cards.css';
 import Card from './card';
 import CardsHeader from './cards-header';
 
-
 const Cards = props => {
     const { results, latitude, longitude } = props;
     

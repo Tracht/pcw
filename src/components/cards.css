@@ -2,6 +2,7 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+    margin-top: 100px;
 }
 
 .cards-header {
@@ -11,15 +12,26 @@
 .cards-body {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: 30px;
+    grid-gap: 80px;
+    margin-top: 40px;
 }
 
 .card {
     display: grid;
     grid-template-rows: max-content 200px 1fr;
-    border: 1px black solid;
+    border: 1px #e1e8ee solid;
+    border-radius: 8px;
     padding-top: 8px;
     padding-bottom: 8px;
+
+    background:#e1e8ee;
+    /* box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05); */
+    transition: .2s ease-in-out;
+}
+
+.card:hover{
+    transform: scale(1.06);
+    box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
 }
 
 .card h3, p, a {

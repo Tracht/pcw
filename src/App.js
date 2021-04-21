@@ -4,6 +4,7 @@ import Header from './components/header';
 import SearchForm from './components/searchForm';
 import Cards from './components/cards';
 import { sortAtoZ } from './utils/index';
+import './App.css'; 
 
 function App() {
 
@@ -77,7 +78,7 @@ function App() {
   }
 
   return (
-  <div className="App">
+  <div className="app-container">
     
       <Header 
         title="UK Postcode Wikipedia"
