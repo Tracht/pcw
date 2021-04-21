@@ -63,7 +63,7 @@ function App() {
       console.log("wiki result:", arrayResult);
     }
     catch (err) {
-      const message = err.response.data.error;
+      const message = err.response.data && err.response.data.error;
       console.log("err", err);
       console.log("err.response.data.error", message);
       setError(message);
@@ -108,8 +108,9 @@ function App() {
               wikiResult && sortAtoZ(wikiResult, "title").map(result => {
                 return (
                 <div>
-                  <li key={result.pageid}>
+                  <li>
                     <p key={result.pageid + result.title}> {result.title} </p>
+                    <p key={result.pageid + result.title + 'distance'}> {result.coordinates ? `Lat: ${result.coordinates[0].lat}, Long: ${result.coordinates[0].lon}` : 'no coordinates available'} </p>
 
                     <img key={result.pageid + result.title + 'img'} src={result.thumbnail && result.thumbnail.source} target="_blank"/> 
 
