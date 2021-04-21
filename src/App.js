@@ -110,8 +110,7 @@ function App() {
                 <div>
                   <li>
                     <p key={result.pageid + result.title}> {result.title} </p>
-                    <p key={result.pageid + result.title + 'coordinates'}> {result.coordinates ? `Lat: ${result.coordinates[0].lat}, Long: ${result.coordinates[0].lon}` : 'no coordinates available'} </p>
-                    <p key={result.pageid + result.title + 'distance'}> {result.coordinates ? `Distance from you: ${distance(latitude, longitude, result.coordinates[0].lat, result.coordinates[0].lon, 'K')} Km` : 'no distance information available'} </p>
+                    <p key={result.pageid + result.title + 'distance'}> {result.coordinates ? `${distance(latitude, longitude, result.coordinates[0].lat, result.coordinates[0].lon, 'K')} km` : 'no distance information available'} </p>
 
                     <img key={result.pageid + result.title + 'img'} src={result.thumbnail && result.thumbnail.source} target="_blank"/> 
 
