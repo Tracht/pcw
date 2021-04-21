@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { sortAtoZ } from './utils/index';
 
 function App() {
 
@@ -9,8 +10,6 @@ function App() {
   const [location, setLocation] = useState('');
   const [error, setError] = useState('');
   const [wikiResult, setWikiResult] = useState(null);
-
-  // const articleURL = 'https://en.wikipedia.org/w/api.php?action=query&format=json&prop=info&pageids=' // 18630637
 
   const postcodeChange = (e) => {
     const {value} = e.target;
@@ -41,17 +40,16 @@ function App() {
         inprop: "url",
         inlinkcontext: "Main%20Page",
         piprop: "thumbnail",
-        pithumbsize: "250",
+        pithumbsize: "350",
         pilimit: "50",
         ggscoord: `${latitude}|${longitude}`, // lat, long
-        ggsradius: "500", // radius in meters
-        ggslimit: "20", // maximum number of pages to return
+        ggsradius: "1000", // radius in meters
+        ggslimit: "100", // maximum number of pages to return
       };
 
       Object.keys(params).forEach(key => {
         url += "&" + key + "=" + params[key]
       });
-      console.log("wiki url:", url);
 
       // Step 4: Make the request to the Wiki URL
       const wikiResponse = await axios.get(url, {mode: 'cors'});
@@ -59,14 +57,16 @@ function App() {
       const arrayResult = Object.entries(result).map(element => {
         return element[1];
       })
+
+      // sortAtoZ(arrayResult, "title");
       setWikiResult(arrayResult);
       console.log("wiki result:", arrayResult);
     }
     catch (err) {
-      // const message = err.response.data.error;
+      const message = err.response.data.error;
       console.log("err", err);
-      // console.log("err.response.data.error", message);
-      setError(err);
+      console.log("err.response.data.error", message);
+      setError(message);
       setLatitude('');
       setLongitude('');
       setLocation('');
@@ -102,27 +102,28 @@ function App() {
 
       <div className="body">
         {/* <Cards props={}/> */}
-        <ul>
-          {
-          wikiResult && wikiResult.map(result => {
-            return (
-            <div>
-              <li key={result.pageid}>
-                <p key={result.pageid + result.title}> {result.title} </p>
+          { 
+            wikiResult && <ul>
+              {
+              wikiResult && sortAtoZ(wikiResult, "title").map(result => {
+                return (
+                <div>
+                  <li key={result.pageid}>
+                    <p key={result.pageid + result.title}> {result.title} </p>
 
-                <img key={result.pageid + result.title + 'img'} src={result.thumbnail && result.thumbnail.source} target="_blank"/> 
+                    <img key={result.pageid + result.title + 'img'} src={result.thumbnail && result.thumbnail.source} target="_blank"/> 
 
-                <a key={result.pageid + result.title + 'imgURL'} href={result.thumbnail && result.thumbnail.source} target="_blank">
-                {result.thumbnail ? '' : 'no picture available'}</a> <br></br>
+                    <a key={result.pageid + result.title + 'imgURL'} href={result.thumbnail && result.thumbnail.source} target="_blank">
+                    {result.thumbnail ? '' : 'no picture available'}</a> <br></br>
 
-                <a key={result.pageid + result.title + 'url'} href={result.fullurl} target="_blank">learn more</a>
-              </li> <br></br>
-            </div>
-            )
-          })
-        }
-        </ul>
-
+                    <a key={result.pageid + result.title + 'url'} href={result.fullurl} target="_blank">learn more</a>
+                  </li> <br></br>
+                </div>
+                )
+              })
+            }
+            </ul> 
+          }
       </div>
 
       <div className="footer">
