@@ -1,7 +1,35 @@
 .search-container{
     text-align: center;
+    margin-top: 80px;
+    margin-bottom: 80px;
 }
 
 .form {
     display: inline-block;
+}
+
+.search-form input, button {
+    border: 1px solid #55ACEE;
+    border-radius: 8px;
+    height: 38px;
+    padding: 0 10px;
+    outline: none;
+    font-size: 17px;
+}
+
+.search-form button {
+    width: 100px;
+    background: #55ACEE;
+    color: white;
+}
+
+.search-form input {
+    width: 236px;
+    margin-left: 20px;
+    margin-right: 10px;
+}
+
+.search-form input:focus {
+        background: #CCD6DD;
+
 }

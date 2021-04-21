@@ -5,10 +5,6 @@
     margin-top: 100px;
 }
 
-.cards-header {
-    text-transform: uppercase;
-}
-
 .cards-body {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -16,21 +12,30 @@
     margin-top: 40px;
 }
 
+.cards-header {
+    margin-bottom: 80px;
+}
+
+.cards-header h3{
+    text-transform: uppercase;
+    font-family: Verdana;
+}
+
 .card {
     display: grid;
     grid-template-rows: max-content 200px 1fr;
-    border: 1px #e1e8ee solid;
+    border: 1px #E1E8ED solid;
     border-radius: 8px;
     padding-top: 8px;
-    padding-bottom: 8px;
+    padding-bottom: 20px;
 
-    background:#e1e8ee;
-    /* box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05); */
-    transition: .2s ease-in-out;
+    background: #E1E8ED;
+    box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05);
+    transition: .1s ease-in-out;
 }
 
 .card:hover{
-    transform: scale(1.06);
+    transform: scale(1.03);
     box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
 }
 
@@ -39,6 +44,17 @@
     padding-right: 4px;
 }
 
+.card p {
+    padding-top: 20px;
+}
+
+.card a {
+    text-decoration: none;
+}
+
+.card a:hover {
+    text-decoration: underline;
+}
 
 .card img {
     padding-top: 12px;

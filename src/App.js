@@ -82,9 +82,7 @@ function App() {
     
       <Header 
         title="UK Postcode Wikipedia"
-        location={location}
-        latitude={latitude}
-        longitude={longitude}
+        subtitle="Check out the history in your backyard!"
       />
 
       <SearchForm 
@@ -99,6 +97,7 @@ function App() {
 
       <Cards 
         results={wikiResult} 
+        location={location}
         latitude={latitude}
         longitude={longitude}
       />

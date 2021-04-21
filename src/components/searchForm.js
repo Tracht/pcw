@@ -5,14 +5,14 @@ const SearchForm = props => {
     
     return(
         <div className="search-container">
-            <form onSubmit={onSubmit}>
-                <label htmlFor={inputText}>{label}</label> <br></br>
-
-                <input type="text" placeholder={inputText}
-                    id={inputText} name={inputText}
-                    value={inputValue} onChange={onInputChange}
-                />
-                
+            <form onSubmit={onSubmit} className="search-form">
+                <label>
+                    <span>{label}</span>
+                    <input type="text" placeholder={inputText}
+                        id={inputText} name={inputText}
+                        value={inputValue} onChange={onInputChange}
+                    />
+                </label>
                 <button type="submit" value="Submit">{submitText}</button>
             </form>
 
