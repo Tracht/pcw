@@ -36,7 +36,7 @@ function App() {
 
   }
 
-  async function getNearestWiki() {
+  async function getNearestWiki() { // --> rename getPostcode()
     try {
       // Step 1: get lat and long from postcode API
       const postcodeResponse = await axios.get(`http://api.postcodes.io/postcodes/${postcode}`);
