@@ -8,6 +8,9 @@ function App() {
   const [longitude, setLongitude] = useState('');
   const [location, setLocation] = useState('');
   const [error, setError] = useState('');
+  const [wikiResult, setWikiResult] = useState(null);
+
+  // const articleURL = 'https://en.wikipedia.org/w/api.php?action=query&format=json&prop=info&pageids=' // 18630637
 
   const postcodeChange = (e) => {
     const {value} = e.target;
@@ -33,14 +36,16 @@ function App() {
       const params = {
         action: "query",
         format: "json",
-        prop: "coordinates|pageimages",
+        prop: "coordinates|pageimages|info",
         generator: "geosearch",
-        piprop: "thumbnail|images",
-        pithumbsize: "50",
+        inprop: "url",
+        inlinkcontext: "Main%20Page",
+        piprop: "thumbnail",
+        pithumbsize: "250",
         pilimit: "50",
-        ggscoord: `${latitude}|-${longitude}`, // lat, long
+        ggscoord: `${latitude}|${longitude}`, // lat, long
         ggsradius: "500", // radius in meters
-        ggslimit: "10", // maximum number of pages to return
+        ggslimit: "20", // maximum number of pages to return
       };
 
       Object.keys(params).forEach(key => {
@@ -50,13 +55,18 @@ function App() {
 
       // Step 4: Make the request to the Wiki URL
       const wikiResponse = await axios.get(url, {mode: 'cors'});
-      console.log("wiki result:", wikiResponse);
-
-    } 
+      const result = wikiResponse.data.query.pages;
+      const arrayResult = Object.entries(result).map(element => {
+        return element[1];
+      })
+      setWikiResult(arrayResult);
+      console.log("wiki result:", arrayResult);
+    }
     catch (err) {
+      // const message = err.response.data.error;
       console.log("err", err);
-      console.log("err.response.data.error", err.response.data.error);
-      setError(err.response.data.error);
+      // console.log("err.response.data.error", message);
+      setError(err);
       setLatitude('');
       setLongitude('');
       setLocation('');
@@ -92,6 +102,21 @@ function App() {
 
       <div className="body">
         {/* <Cards props={}/> */}
+        <ul>
+          {
+          wikiResult && wikiResult.map(result => {
+            return (
+            <div>
+              <li>
+                <p key={result.pageid}> {result.title} </p>
+                <a href={result.fullurl} target="_blank">learn more</a>
+              </li> <br></br>
+            </div>
+            )
+          })
+        }
+        </ul>
+
       </div>
 
       <div className="footer">
