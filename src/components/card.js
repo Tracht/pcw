@@ -1,8 +1,6 @@
-import { distance } from '../utils/index';
 import CardTitle from './card-title';
 import CardImage from './card-image';
 import CardContent from './card-content';
-
 
 const Card = props => {
     const { result, latitude, longitude } = props;
@@ -18,10 +16,12 @@ const Card = props => {
                 result={result}
             />
 
-            <div className="content">
-                <p key={result.pageid + result.title + 'distance'}> {result.coordinates ? `${distance(latitude, longitude, result.coordinates[0].lat, result.coordinates[0].lon, 'K')} km` : 'distance information not available'} </p>
-                <a key={result.pageid + result.title + 'url'} href={result.fullurl} target="_blank">learn more</a>
-            </div>
+            <CardContent 
+                key={result.pageid + result.title + 'content'}
+                latitude={latitude}
+                longitude={longitude}
+                result={result}
+            />
         </article>
     );
   };
