@@ -108,9 +108,13 @@ function App() {
             return (
             <div>
               <li key={result.pageid}>
-                <a key={result.pageid + result.title + 'img'} href={result.thumbnail && result.thumbnail.source} target="_blank">
-                {result.thumbnail ? 'pic' : 'no picture available'}</a>
                 <p key={result.pageid + result.title}> {result.title} </p>
+
+                <img key={result.pageid + result.title + 'img'} src={result.thumbnail && result.thumbnail.source} target="_blank"/> 
+
+                <a key={result.pageid + result.title + 'imgURL'} href={result.thumbnail && result.thumbnail.source} target="_blank">
+                {result.thumbnail ? '' : 'no picture available'}</a> <br></br>
+
                 <a key={result.pageid + result.title + 'url'} href={result.fullurl} target="_blank">learn more</a>
               </li> <br></br>
             </div>
