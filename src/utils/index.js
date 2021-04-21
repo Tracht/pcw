@@ -12,6 +12,7 @@ function sortAtoZ (wikiResults, fieldName) {
   }
 
 function distance(lat1, lon1, lat2, lon2, unit) {
+  // source: https://www.geodatasource.com/developers/javascript
     if ((lat1 == lat2) && (lon1 == lon2)) {
       return 0;
     }

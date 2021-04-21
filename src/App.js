@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import Header from './components/header';
+import SearchForm from './components/searchForm';
 import { sortAtoZ, distance } from './utils/index';
 
 function App() {
@@ -78,24 +80,22 @@ function App() {
   return (
   <div className="App">
     
-      <div className="header-container">
-        <h1>UK Postcode Wikipedia</h1>
-        { location ? <h3> {location} </h3> : null }
-        { latitude && longitude ? <h4>({latitude}, {longitude}) </h4> : null }
-      </div>
+      <Header 
+        title="UK Postcode Wikipedia"
+        location={location}
+        latitude={latitude}
+        longitude={longitude}
+      />
 
-      <div className="search-container">
-        {/* <Search onClick={} /> */}
-        
-        <form onSubmit={postcodeSubmit}>
-          <label htmlFor="postcode">Postcode</label> <br></br>
-          <input type="text" placeholder="postcode" 
-            id="postcode" name="postcode" 
-            value={postcode} onChange={postcodeChange}/>
-          <button type="submit" value="Submit">Submit</button>
-        </form>
-        <p>{error}</p>
-      </div>
+      <SearchForm 
+        onSubmit={postcodeSubmit}
+        label="Postcode"
+        inputText="postcode"
+        inputValue={postcode}
+        onInputChange={postcodeChange}
+        error={error}
+        submitText="submit"
+      />
 
       <div className="body">
         {/* <Cards props={}/> */}
