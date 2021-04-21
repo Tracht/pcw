@@ -20,8 +20,20 @@ function App() {
     setPostcode(value);
   }
 
-  function getWikiAPI(latitude, longitude){
+  function setAppState(){
     
+  }
+
+  function getWikiAPI(latitude, longitude){
+  
+  }
+
+  function makeWikiRequest(){
+
+  }
+
+  function resetAppState(){
+
   }
 
   async function getNearestWiki() {
@@ -37,7 +49,7 @@ function App() {
       setPostcode('');
       setError('');
       
-      // Step 3: Create the GET request to WIKIPEDIA API --> refactor into  "getWikiUrl()"
+      // Step 3: Create the GET request to WIKIPEDIA API --> refactor into  "getWikiAPI()"
       let wikiAPI = "https://en.wikipedia.org/w/api.php?origin=*";
       const params = {
         action: "query",
