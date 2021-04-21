@@ -1,7 +1,6 @@
-import React from "react";
-
 const SearchForm = props => {
     const { onSubmit, label, inputValue, inputText, onInputChange, error, submitText } = props;
+    
     return(
         <div className="search-container">
             <form onSubmit={onSubmit}>

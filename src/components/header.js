@@ -1,7 +1,6 @@
-import React from "react";
-
 const Header = props => {
   const { title, location, latitude, longitude } = props;
+  
   return (
     <div className="header-container">
         <h1>{title}</h1>
