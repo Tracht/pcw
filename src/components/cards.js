@@ -4,14 +4,14 @@ const Cards = props => {
     return(
         <div className="body">
 
-          <p>{results && `There are ${results.length} results`}</p>
+          <p>{results && `${results.length} results`}</p>
 
           { 
             results && <ul>
               {
               results && results.map(result => {
                 return (
-                <div>
+                <div key={result.pageid}>
                   <li>
                     <p key={result.pageid + result.title}> {result.title} </p>
                     <p key={result.pageid + result.title + 'distance'}> {result.coordinates ? `${distance(latitude, longitude, result.coordinates[0].lat, result.coordinates[0].lon, 'K')} km` : 'no distance information available'} </p>
