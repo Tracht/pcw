@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Header from './components/header';
 import SearchForm from './components/searchForm';
+import Cards from './components/cards';
 import { sortAtoZ, distance } from './utils/index';
 
 function App() {
@@ -23,7 +24,6 @@ function App() {
       // Step 1: get lat and long from postcode API
       const postcodeResponse = await axios.get(`http://api.postcodes.io/postcodes/${postcode}`);
       const { latitude, longitude, admin_district, country } = postcodeResponse.data.result;
-      console.log(postcodeResponse.data.result);
      
       // Step 2: set state, reset form & message
       setLatitude(latitude);
@@ -61,7 +61,6 @@ function App() {
       })
       const sortedResultsAtoZ = sortAtoZ(arrayResult, "title"); // sort it A to Z
       setWikiResult(sortedResultsAtoZ);
-      console.log("wiki result:", arrayResult);
     }
     catch (err) {
       const message = err.response.data && err.response.data.error;
@@ -97,35 +96,12 @@ function App() {
         submitText="submit"
       />
 
-      <div className="body">
-        {/* <Cards props={}/> */}
-
-          <p>{wikiResult && `There are ${wikiResult.length} results`}</p>
-
-          { 
-            wikiResult && <ul>
-              {
-              wikiResult && wikiResult.map(result => {
-                return (
-                <div>
-                  <li>
-                    <p key={result.pageid + result.title}> {result.title} </p>
-                    <p key={result.pageid + result.title + 'distance'}> {result.coordinates ? `${distance(latitude, longitude, result.coordinates[0].lat, result.coordinates[0].lon, 'K')} km` : 'no distance information available'} </p>
-
-                    <img key={result.pageid + result.title + 'img'} src={result.thumbnail && result.thumbnail.source} target="_blank"/> 
-
-                    <a key={result.pageid + result.title + 'imgURL'} href={result.thumbnail && result.thumbnail.source} target="_blank">
-                    {result.thumbnail ? '' : 'no picture available'}</a> <br></br>
-
-                    <a key={result.pageid + result.title + 'url'} href={result.fullurl} target="_blank">learn more</a>
-                  </li> <br></br>
-                </div>
-                )
-              })
-            }
-            </ul> 
-          }
-      </div>
+      <Cards 
+        results={wikiResult} 
+        latitude={latitude}
+        longitude={longitude}
+        distance={distance}
+      />
     
   </div>
   );
