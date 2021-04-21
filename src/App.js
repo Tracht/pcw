@@ -107,9 +107,11 @@ function App() {
           wikiResult && wikiResult.map(result => {
             return (
             <div>
-              <li>
-                <p key={result.pageid}> {result.title} </p>
-                <a href={result.fullurl} target="_blank">learn more</a>
+              <li key={result.pageid}>
+                <a key={result.pageid + result.title + 'img'} href={result.thumbnail && result.thumbnail.source} target="_blank">
+                {result.thumbnail ? 'pic' : 'no picture available'}</a>
+                <p key={result.pageid + result.title}> {result.title} </p>
+                <a key={result.pageid + result.title + 'url'} href={result.fullurl} target="_blank">learn more</a>
               </li> <br></br>
             </div>
             )
