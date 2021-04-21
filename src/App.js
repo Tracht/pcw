@@ -102,6 +102,9 @@ function App() {
 
       <div className="body">
         {/* <Cards props={}/> */}
+
+          <p>{wikiResult && `There are ${wikiResult.length} results`}</p>
+
           { 
             wikiResult && <ul>
               {
