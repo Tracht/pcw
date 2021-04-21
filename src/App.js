@@ -3,7 +3,7 @@ import axios from 'axios';
 import Header from './components/header';
 import SearchForm from './components/searchForm';
 import Cards from './components/cards';
-import { sortAtoZ, distance } from './utils/index';
+import { sortAtoZ } from './utils/index';
 
 function App() {
 
@@ -100,7 +100,6 @@ function App() {
         results={wikiResult} 
         latitude={latitude}
         longitude={longitude}
-        distance={distance}
       />
     
   </div>
