@@ -33,8 +33,8 @@ function App() {
       setPostcode('');
       setError('');
       
-      // Step 3: Create the WIKI url GET request
-      let url = "https://en.wikipedia.org/w/api.php?origin=*";
+      // Step 3: Create the GET request to WIKIPEDIA API
+      let wikiAPI = "https://en.wikipedia.org/w/api.php?origin=*";
       const params = {
         action: "query",
         format: "json",
@@ -51,11 +51,11 @@ function App() {
       };
 
       Object.keys(params).forEach(key => {
-        url += "&" + key + "=" + params[key]
+        wikiAPI += "&" + key + "=" + params[key]
       });
 
-      // Step 4: Make the request to the Wiki URL
-      const wikiResponse = await axios.get(url, {mode: 'cors'});
+      // Step 4: Make the request to the Wiki API URL
+      const wikiResponse = await axios.get(wikiAPI, {mode: 'cors'});
       const result = wikiResponse.data.query.pages;
       const arrayResult = Object.entries(result).map(element => { // turn 'result' into an array
         return element[1];
