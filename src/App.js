@@ -20,20 +20,24 @@ function App() {
     setPostcode(value);
   }
 
+  function getWikiAPI(latitude, longitude){
+    
+  }
+
   async function getNearestWiki() {
     try {
       // Step 1: get lat and long from postcode API
       const postcodeResponse = await axios.get(`http://api.postcodes.io/postcodes/${postcode}`);
       const { latitude, longitude, admin_district, country } = postcodeResponse.data.result;
      
-      // Step 2: set state, reset form & message
+      // Step 2: set state, reset form & message --> refactor into "setAppState()"
       setLatitude(latitude);
       setLongitude(longitude);
       setLocation(`${admin_district}, ${country}`);
       setPostcode('');
       setError('');
       
-      // Step 3: Create the GET request to WIKIPEDIA API
+      // Step 3: Create the GET request to WIKIPEDIA API --> refactor into  "getWikiUrl()"
       let wikiAPI = "https://en.wikipedia.org/w/api.php?origin=*";
       const params = {
         action: "query",
@@ -54,7 +58,7 @@ function App() {
         wikiAPI += "&" + key + "=" + params[key]
       });
 
-      // Step 4: Make the request to the Wiki API URL
+      // Step 4: Make the request to the Wiki API URL --> refactor into "makeWikiRequest()"
       const wikiResponse = await axios.get(wikiAPI, {mode: 'cors'});
       const result = wikiResponse.data.query.pages;
       const arrayResult = Object.entries(result).map(element => { // turn 'result' into an array
@@ -66,6 +70,8 @@ function App() {
     catch (err) {
       const message = err.response.data && err.response.data.error;
       setError(message);
+
+      // refactor --> "resetAppState()"
       setLatitude('');
       setLongitude('');
       setLocation('');
