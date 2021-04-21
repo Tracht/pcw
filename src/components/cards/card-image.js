@@ -1,4 +1,4 @@
-import noImg from '../assets/no-image-avail.jpg';
+import noImg from '../../assets/no-image-avail.jpg';
 
 const CardImage = props => {
     const { result } = props;
@@ -9,12 +9,12 @@ const CardImage = props => {
                 <img  
                     src={result.thumbnail && result.thumbnail.source}
                     target="_blank"
-                    alt={'image of' + result.title}
+                    alt={result.title}
                 /> 
                 : <img
                     src={noImg} 
                     target="_blank"
-                    alt={'No image available'}
+                    alt={'None available'}
                     />
             }
         </div>

@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Header from './components/header';
 import SearchForm from './components/searchForm';
-import Cards from './components/cards';
-import { sortAtoZ } from './utils/index';
+import Cards from './components/cards/cards';
+import { sortAtoZ } from './utils/utils';
 import './App.css'; 
 
 function App() {
@@ -69,6 +69,7 @@ function App() {
       setLatitude('');
       setLongitude('');
       setLocation('');
+      setWikiResult(null);
     }
   }
 
