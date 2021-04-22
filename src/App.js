@@ -59,8 +59,7 @@ function App() {
           return element[1]; // we don't need index[0] (which are the pageIDs - they are already in index[1])
       })
 
-      const sortedResultsAtoZ = sortAtoZ(arrayResult, "title");
-      setWikiResult(sortedResultsAtoZ);
+      setWikiResult(sortAtoZ(arrayResult, "title"));
     }
     catch (err) {
       console.log(err);
