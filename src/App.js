@@ -4,6 +4,7 @@ import Header from './components/header';
 import SearchForm from './components/searchForm';
 import Cards from './components/cards/cards';
 import { sortAtoZ } from './utils/utils';
+import { createWikiAPI } from './api/api';
 import './App.css'; 
 
 function App() {
@@ -35,30 +36,6 @@ function App() {
     setWikiResult(null);
   }
 
-  function createWikiAPI(lat, long){
-    let wikiAPI = "https://en.wikipedia.org/w/api.php?origin=*";
-    const params = {
-      action: "query",
-      format: "json",
-      prop: "coordinates|pageimages|info",
-      generator: "geosearch",
-      inprop: "url",
-      inlinkcontext: "Main%20Page",
-      piprop: "thumbnail",
-      pithumbsize: "350",
-      pilimit: "50",
-      ggscoord: `${lat}|${long}`,
-      ggsradius: "1000", // radius in meters
-      ggslimit: "100", // max. number of pages
-    };
-
-    Object.keys(params).forEach(key => {
-      wikiAPI += "&" + key + "=" + params[key]
-    });
-
-    return wikiAPI;
-  }
-
   async function getPostcode() {
     try {
       const postcodeResponse = await axios.get(`http://api.postcodes.io/postcodes/${postcode}`);
@@ -75,10 +52,11 @@ function App() {
 
   async function getWikiResponse(wikiAPI){
     try {
-      const wikiResponse = await axios.get(wikiAPI, {mode: 'cors'}); 
+      const wikiResponse = await axios.get(wikiAPI, {mode: 'cors'}); // cors allows a request to a different origin
       const result = wikiResponse.data.query.pages;
+
       const arrayResult = Object.entries(result).map(element => {
-          return element[1]; // we don't need index[0], which are the pageIDs (they are already in index[1])
+          return element[1]; // we don't need index[0] (which are the pageIDs - they are already in index[1])
       })
 
       const sortedResultsAtoZ = sortAtoZ(arrayResult, "title");
