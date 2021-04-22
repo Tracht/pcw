@@ -53,13 +53,19 @@ function App() {
   async function getWikiResponse(wikiAPI){
     try {
       const wikiResponse = await axios.get(wikiAPI, {mode: 'cors'}); // cors allows a request to a different origin
-      const result = wikiResponse.data.query.pages;
-
-      const arrayResult = Object.entries(result).map(element => {
-          return element[1]; // we don't need index[0] (which are the pageIDs - they are already in index[1])
-      })
-
-      setWikiResult(sortAtoZ(arrayResult, "title"));
+      const hasResults = wikiResponse.data.query; 
+      
+      if (hasResults) { 
+        const result = wikiResponse.data.query.pages;
+        const arrayResult = Object.entries(result).map(element => {
+            return element[1]; // we don't need index[0] (which are the pageIDs - they are already in index[1])
+        })
+        setWikiResult(sortAtoZ(arrayResult, "title"));
+      }
+      else {
+        setError("No results available.")
+      }
+      
     }
     catch (err) {
       console.log(err);
