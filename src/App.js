@@ -5,7 +5,7 @@ import SearchForm from './components/searchForm';
 import Cards from './components/cards/cards';
 import { GetNearestWiki } from './hooks/getNearestWiki';
 
-function App() {
+const App = () => {
   const { form, coordinates, location, error, wikiResult, setForm, getPostcode, getWikiResponse } = GetNearestWiki();
 
   function postcodeChange (e) {
