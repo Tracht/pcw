@@ -10,9 +10,7 @@ import './App.css';
 function App() {
 
   const [form, setForm] = useState({});
-
-  const [latitude, setLatitude] = useState('');
-  const [longitude, setLongitude] = useState('');
+  const [coordinates, setCoordinates] = useState({});
   const [location, setLocation] = useState('');
   const [error, setError] = useState('');
   const [wikiResult, setWikiResult] = useState(null);
@@ -23,15 +21,13 @@ function App() {
   }
 
   function setAppStateSuccess(lat, long, district, country){
-    setLatitude(lat);
-    setLongitude(long);
+    setCoordinates({ latitude: lat, longitude: long});
     setLocation(`${district}, ${country}`);
     setError('');
   }
 
   function resetAppState(){
-    setLatitude('');
-    setLongitude('');
+    setCoordinates({ latitude: "", longitude: ""});
     setLocation('');
     setWikiResult(null);
   }
@@ -100,8 +96,7 @@ function App() {
       <Cards 
         results={wikiResult} 
         location={location}
-        latitude={latitude}
-        longitude={longitude}
+        coordinates={coordinates}
       />
     
   </div>

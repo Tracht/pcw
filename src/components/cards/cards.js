@@ -3,7 +3,7 @@ import Card from './card';
 import CardsHeader from './cards-header';
 
 const Cards = props => {
-    const { results, location, latitude, longitude } = props;
+    const { results, location, coordinates } = props;
     
     return(
     <div className="cards-container">
@@ -11,8 +11,7 @@ const Cards = props => {
         <CardsHeader 
             results={results}
             location={location}
-            latitude={latitude}
-            longitude={longitude}
+            coordinates={coordinates}
         />
 
         <div className="cards-body">
@@ -20,8 +19,7 @@ const Cards = props => {
                 return (
                     <Card 
                         key={result.pageid}
-                        latitude={latitude}
-                        longitude={longitude}
+                        coordinates={coordinates}
                         result={result} />
                     )
                 })

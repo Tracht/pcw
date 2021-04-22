@@ -3,7 +3,8 @@ import CardImage from './card-image';
 import CardContent from './card-content';
 
 const Card = props => {
-    const { result, latitude, longitude } = props;
+    const { result, coordinates } = props;
+
     return (
         <article className="card">
             <CardTitle 
@@ -18,8 +19,7 @@ const Card = props => {
 
             <CardContent 
                 key={result.pageid + result.title + 'content'}
-                latitude={latitude}
-                longitude={longitude}
+                coordinates={coordinates}
                 result={result}
             />
         </article>
