@@ -1,7 +1,7 @@
 import './App.css'; 
 import React from 'react';
-import Header from './components/header';
-import SearchForm from './components/searchForm';
+import Header from './components/header/header';
+import SearchForm from './components/searchForm/searchForm';
 import Cards from './components/cards/cards';
 import { GetNearestWiki } from './hooks/getNearestWiki';
 
