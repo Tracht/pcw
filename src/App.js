@@ -9,7 +9,8 @@ import './App.css';
 
 function App() {
 
-  const [postcode, setPostcode] = useState('');
+  const [form, setForm] = useState({});
+
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
   const [location, setLocation] = useState('');
@@ -17,15 +18,14 @@ function App() {
   const [wikiResult, setWikiResult] = useState(null);
 
   function postcodeChange (e) {
-    const {value} = e.target;
-    setPostcode(value);
+    const {name, value} = e.target;
+    setForm({ ...form, [name]: value })
   }
 
   function setAppStateSuccess(lat, long, district, country){
     setLatitude(lat);
     setLongitude(long);
     setLocation(`${district}, ${country}`);
-    setPostcode('');
     setError('');
   }
 
@@ -37,11 +37,12 @@ function App() {
   }
 
   async function getPostcode() {
+    let { postcode, radius } = form;
     try {
       const postcodeResponse = await axios.get(`http://api.postcodes.io/postcodes/${postcode}`);
       const { latitude, longitude, admin_district, country } = postcodeResponse.data.result;
       setAppStateSuccess(latitude, longitude, admin_district, country);
-      return createWikiAPI(latitude, longitude); // returns the WIKI API with the lat & long coordinates in the get request
+      return createWikiAPI(latitude, longitude, radius); // returns the WIKI API with the lat & long coordinates in the get request
     }
     catch (err) {
       const message = err.response.data && err.response.data.error;
@@ -90,9 +91,7 @@ function App() {
 
       <SearchForm 
         onSubmit={postcodeSubmit}
-        label="Postcode"
-        inputText="postcode"
-        inputValue={postcode}
+        inputValue={form}
         onInputChange={postcodeChange}
         error={error}
         submitText="submit"

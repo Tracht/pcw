@@ -1,4 +1,4 @@
-function createWikiAPI(lat, long){
+function createWikiAPI(lat, long, radius){
     let wikiAPI = "https://en.wikipedia.org/w/api.php?origin=*";
     const params = {
       action: "query",
@@ -6,7 +6,7 @@ function createWikiAPI(lat, long){
       prop: "coordinates|pageimages|info",
       generator: "geosearch",
       ggscoord: `${lat}|${long}`,
-      ggsradius: "1000", // radius in meters
+      ggsradius: radius, // radius in meters, must be between 10 and 10000
       ggslimit: "100", // max. number of pages
       inprop: "url",
       piprop: "thumbnail", 
@@ -22,4 +22,4 @@ function createWikiAPI(lat, long){
     return wikiAPI;
   }
 
-export {createWikiAPI };
+export { createWikiAPI };
