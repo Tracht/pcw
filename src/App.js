@@ -15,85 +15,86 @@ function App() {
   const [error, setError] = useState('');
   const [wikiResult, setWikiResult] = useState(null);
 
-  const postcodeChange = (e) => {
+  function postcodeChange (e) {
     const {value} = e.target;
     setPostcode(value);
   }
 
-  function setAppState(){
-    
-  }
-
-  function getWikiAPI(latitude, longitude){
-  
-  }
-
-  function makeWikiRequest(){
-
+  function setAppStateSuccess(lat, long, district, country){
+    setLatitude(lat);
+    setLongitude(long);
+    setLocation(`${district}, ${country}`);
+    setPostcode('');
+    setError('');
   }
 
   function resetAppState(){
-
+    setLatitude('');
+    setLongitude('');
+    setLocation('');
+    setWikiResult(null);
   }
 
-  async function getNearestWiki() { // --> rename getPostcode()
+  function createWikiAPI(lat, long){
+    let wikiAPI = "https://en.wikipedia.org/w/api.php?origin=*";
+    const params = {
+      action: "query",
+      format: "json",
+      prop: "coordinates|pageimages|info",
+      generator: "geosearch",
+      inprop: "url",
+      inlinkcontext: "Main%20Page",
+      piprop: "thumbnail",
+      pithumbsize: "350",
+      pilimit: "50",
+      ggscoord: `${lat}|${long}`,
+      ggsradius: "1000", // radius in meters
+      ggslimit: "100", // max. number of pages
+    };
+
+    Object.keys(params).forEach(key => {
+      wikiAPI += "&" + key + "=" + params[key]
+    });
+
+    return wikiAPI;
+  }
+
+  async function getPostcode() {
     try {
-      // Step 1: get lat and long from postcode API
       const postcodeResponse = await axios.get(`http://api.postcodes.io/postcodes/${postcode}`);
       const { latitude, longitude, admin_district, country } = postcodeResponse.data.result;
-     
-      // Step 2: set state, reset form & message --> refactor into "setAppState()"
-      setLatitude(latitude);
-      setLongitude(longitude);
-      setLocation(`${admin_district}, ${country}`);
-      setPostcode('');
-      setError('');
-      
-      // Step 3: Create the GET request to WIKIPEDIA API --> refactor into  "getWikiAPI()"
-      let wikiAPI = "https://en.wikipedia.org/w/api.php?origin=*";
-      const params = {
-        action: "query",
-        format: "json",
-        prop: "coordinates|pageimages|info",
-        generator: "geosearch",
-        inprop: "url",
-        inlinkcontext: "Main%20Page",
-        piprop: "thumbnail",
-        pithumbsize: "350",
-        pilimit: "50",
-        ggscoord: `${latitude}|${longitude}`, // lat, long
-        ggsradius: "1000", // radius in meters
-        ggslimit: "100", // maximum number of pages to return
-      };
-
-      Object.keys(params).forEach(key => {
-        wikiAPI += "&" + key + "=" + params[key]
-      });
-
-      // Step 4: Make the request to the Wiki API URL --> refactor into "makeWikiRequest()"
-      const wikiResponse = await axios.get(wikiAPI, {mode: 'cors'});
-      const result = wikiResponse.data.query.pages;
-      const arrayResult = Object.entries(result).map(element => { // turn 'result' into an array
-        return element[1];
-      })
-      const sortedResultsAtoZ = sortAtoZ(arrayResult, "title"); // sort it A to Z
-      setWikiResult(sortedResultsAtoZ);
+      setAppStateSuccess(latitude, longitude, admin_district, country);
+      return createWikiAPI(latitude, longitude); // returns the WIKI API with the lat & long coordinates in the get request
     }
     catch (err) {
       const message = err.response.data && err.response.data.error;
       setError(message);
-
-      // refactor --> "resetAppState()"
-      setLatitude('');
-      setLongitude('');
-      setLocation('');
-      setWikiResult(null);
+      resetAppState();
     }
   }
 
-  const postcodeSubmit = (e) => {
+  async function getWikiResponse(wikiAPI){
+    try {
+      const wikiResponse = await axios.get(wikiAPI, {mode: 'cors'}); 
+      const result = wikiResponse.data.query.pages;
+      const arrayResult = Object.entries(result).map(element => {
+          return element[1]; // we don't need index[0], which are the pageIDs (they are already in index[1])
+      })
+
+      const sortedResultsAtoZ = sortAtoZ(arrayResult, "title");
+      setWikiResult(sortedResultsAtoZ);
+    }
+    catch (err) {
+      console.log(err);
+      resetAppState();
+    }
+  }
+
+  async function postcodeSubmit(e) {
     e.preventDefault();
-    getNearestWiki();
+    const postcodeResult = await getPostcode();
+    const wikiResponse = await getWikiResponse(postcodeResult);
+    return wikiResponse;
   }
 
   return (
