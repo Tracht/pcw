@@ -5,14 +5,14 @@ function createWikiAPI(lat, long){
       format: "json",
       prop: "coordinates|pageimages|info",
       generator: "geosearch",
-      inprop: "url",
-      inlinkcontext: "Main%20Page",
-      piprop: "thumbnail",
-      pithumbsize: "350",
-      pilimit: "50",
       ggscoord: `${lat}|${long}`,
       ggsradius: "1000", // radius in meters
       ggslimit: "100", // max. number of pages
+      inprop: "url",
+      piprop: "thumbnail", 
+      pithumbsize: "350", // max width in pixels of thumbnail images
+      pilimit: "50", // how many pages to return
+     
     };
 
     Object.keys(params).forEach(key => {
