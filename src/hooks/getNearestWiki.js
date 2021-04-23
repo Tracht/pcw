@@ -25,7 +25,7 @@ function GetNearestWiki() {
     async function getPostcode() {
         let { postcode, radius } = form;
         try {
-          const postcodeResponse = await axios.get(`http://api.postcodes.io/postcodes/${postcode}`);
+          const postcodeResponse = await axios.get(`https://api.postcodes.io/postcodes/${postcode}`);
           const { latitude, longitude, admin_district, country } = postcodeResponse.data.result;
           setAppStateSuccess(latitude, longitude, admin_district, country);
           return createWikiAPI(latitude, longitude, radius); // returns the WIKI API with the lat & long coordinates in the get request
