@@ -2,6 +2,9 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+### Check it out here
+[PCWiki](https://happy-brahmagupta-a84c6c.netlify.app/) <-- click to see it live!
+
 ### To get this running on your local machine: 
 
 * Clone this repo
@@ -11,3 +14,4 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ### Preview
 ![Screenshot 2021-04-21 at 21 38 42](https://user-images.githubusercontent.com/28805811/115618326-7130c280-a2ea-11eb-99f8-7ab7d6152d4b.png)
+
